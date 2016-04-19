@@ -4,7 +4,7 @@ display "0.jpg" &
 while :
 do
 	#statements
-	nc -l -p 8000 > client
+	nc -l $1 $2 > client
 	x=$(cat client)
 	case "$x" in
 		0) display -remote "0.jpg" ;;
