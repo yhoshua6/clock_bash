@@ -8,8 +8,7 @@ if [ $DIS -ne 0 ]; then
 	sleep 3
 	while :
 	do
-		#statements
-		#nc -l -p 8000  > client
+		#recibe conexion de netcat
 		nc $1 $2 > client
 		x=$(cat client)
 		case "$x" in
