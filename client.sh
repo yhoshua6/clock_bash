@@ -1,5 +1,6 @@
 #!/bin/bash
 #Josué Hernández Mateo
+#Eduardo Herrera Dominguez
 DIS=0
 display "0.jpg" &
 DIS=$!
@@ -9,7 +10,7 @@ if [ $DIS -ne 0 ]; then
 	do
 		#statements
 		#nc -l -p 8000  > client
-		nc $1 8000 > client
+		nc $1 $2 > client
 		x=$(cat client)
 		case "$x" in
 			0) display -remote "0.jpg" ;;
