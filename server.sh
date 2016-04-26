@@ -1,43 +1,18 @@
 #!/bin/bash
 #Josué Hernández Mateo
 
-#!/bin/bash
-
-usegundo=/tmp/usegundo
-dsegundo=/tmp/dsegundo
-uminuto=/tmp/uminuto
-dminuto=/tmp/dminuto
-
-trap "rm -f $usegundo" EXIT
-trap "rm -f $dsegundo" EXIT
-trap "rm -f $uminuto" EXIT
-trap "rm -f $dminuto" EXIT
-
-if [[ ! -p $usegundo ]]; then
-    mkfifo $usegundo
-fi
-if [[ ! -p $dsegundo ]]; then
-    mkfifo $dsegundo
-fi
-if [[ ! -p $uminuto ]]; then
-    mkfifo $uminuto
-fi
-if [[ ! -p $dminuto ]]; then
-    mkfifo $dminuto
-fi
-
 while :
 do
 	#get time from computer
-	echo $(date +%T | awk '{print substr($1,8,1)}') > $usegundo #unidad de segundo
-	echo $(date +%T | awk '{print substr($1,7,1)}') > $dsegundo #decima de segundo
-	echo $(date +%T | awk '{print substr($1,5,1)}') > $uminuto #decima de minuto
-	echo $(date +%T | awk '{print substr($1,4,1)}') > $dminuto #unidad de minuto
+	echo $(date +%T | awk '{print substr($1,8,1)}') > usegundo #unidad de segundo
+	echo $(date +%T | awk '{print substr($1,7,1)}') > dsegundo #decima de segundo
+	echo $(date +%T | awk '{print substr($1,5,1)}') > uminuto #decima de minuto
+	echo $(date +%T | awk '{print substr($1,4,1)}') > dminuto #unidad de minuto
 
-	#coneccion en los puertos
-	nc -l -p 8000 < $usegundo
-	nc -l -p 8001 < $dsegundo
-	#nc -l -p 8002 < $uminuto
-	#nc -l -p 8003 < $dminuto
+	#manda coneccion 
+	nc -l -p 8000 < usegundo
+	#nc -l -p 8001 < dsegundo
+	#nc -l -p 8002 < dsegundo
+	#nc -l -p 8003 < dsegundo
 	sleep 1
 done

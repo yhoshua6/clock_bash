@@ -4,21 +4,13 @@
 DIS=0
 display "0.jpg" &
 DIS=$!
-client=/tmp/client
-
-trap "rm -f $client" EXIT
-
-if [[ ! -p $client ]]; then
-    mkfifo $client
-fi
-
 if [ $DIS -ne 0 ]; then
 	sleep 3
 	while :
 	do
 		#recibe conexion de netcat
-		nc $1 $2 > $client
-		x=$(cat $client)
+		nc $1 $2 > client
+		x=$(cat client)
 		case "$x" in
 			0) display -remote "0.jpg" ;;
 			1) display -remote "1.jpg" ;;
